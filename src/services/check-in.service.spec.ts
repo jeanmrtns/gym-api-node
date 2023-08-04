@@ -19,8 +19,8 @@ describe('CheckIn service', () => {
       id: 'gym-id',
       name: 'Super gym',
       description: '',
-      latitude: new Decimal(0),
-      longitude: new Decimal(0),
+      latitude: new Decimal(-21.8106509),
+      longitude: new Decimal(-46.4993994),
       created_at: new Date(),
     });
 
@@ -35,8 +35,8 @@ describe('CheckIn service', () => {
     const { checkIn } = await sut.execute({
       gymId: 'gym-id',
       userId: 'user-id',
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: -21.8106509,
+      userLongitude: -46.4993994,
     });
 
     expect(checkIn).toHaveProperty('id');
@@ -47,10 +47,21 @@ describe('CheckIn service', () => {
       await sut.execute({
         gymId: 'gym-id-wrong',
         userId: 'user-id',
-        userLatitude: 0,
-        userLongitude: 0,
+        userLatitude: -21.8106509,
+        userLongitude: -46.4993994,
       });
     }).rejects.toBeInstanceOf(ResourceNotFoundError);
+  });
+
+  it('should not be able to check in if user is not close to the gym', async () => {
+    await expect(async () => {
+      await sut.execute({
+        gymId: 'gym-id-wrong',
+        userId: 'user-id',
+        userLatitude: -21.8065755,
+        userLongitude: -46.4995082,
+      });
+    }).rejects.toBeInstanceOf(Error);
   });
 
   it('should not be able to check in twice in the same day', async () => {
@@ -59,16 +70,16 @@ describe('CheckIn service', () => {
     await sut.execute({
       gymId: 'gym-id',
       userId: 'user-id',
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: -21.8106509,
+      userLongitude: -46.4993994,
     });
 
     await expect(async () => {
       await sut.execute({
         gymId: 'gym-id',
         userId: 'user-id',
-        userLatitude: 0,
-        userLongitude: 0,
+        userLatitude: -21.8106509,
+        userLongitude: -46.4993994,
       });
     }).rejects.toBeInstanceOf(Error);
   });
@@ -79,8 +90,8 @@ describe('CheckIn service', () => {
     await sut.execute({
       gymId: 'gym-id',
       userId: 'user-id',
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: -21.8106509,
+      userLongitude: -46.4993994,
     });
 
     vi.setSystemTime(new Date(2023, 2, 11, 13, 0, 0));
@@ -88,8 +99,8 @@ describe('CheckIn service', () => {
     const { checkIn } = await sut.execute({
       gymId: 'gym-id',
       userId: 'user-id',
-      userLatitude: 0,
-      userLongitude: 0,
+      userLatitude: -21.8106509,
+      userLongitude: -46.4993994,
     });
 
     expect(checkIn).toHaveProperty('id');
