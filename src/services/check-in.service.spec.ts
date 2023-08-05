@@ -4,6 +4,8 @@ import { InMemoryCheckInsRepository } from '@/repositories/in-memory-database/in
 import { InMemoryGymsRepository } from '@/repositories/in-memory-database/in-memory.gyms.repository';
 import { Decimal } from '@prisma/client/runtime/library';
 import { ResourceNotFoundError } from './errors/resource-not-found.error';
+import { MaxDistanceError } from './errors/max-distance.error';
+import { MaxCheckInsError } from './errors/max-check-ins.error';
 
 let checkInsRepository: InMemoryCheckInsRepository;
 let gymsRepository: InMemoryGymsRepository;
@@ -56,12 +58,12 @@ describe('CheckIn service', () => {
   it('should not be able to check in if user is not close to the gym', async () => {
     await expect(async () => {
       await sut.execute({
-        gymId: 'gym-id-wrong',
+        gymId: 'gym-id',
         userId: 'user-id',
         userLatitude: -21.8065755,
         userLongitude: -46.4995082,
       });
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(MaxDistanceError);
   });
 
   it('should not be able to check in twice in the same day', async () => {
@@ -81,7 +83,7 @@ describe('CheckIn service', () => {
         userLatitude: -21.8106509,
         userLongitude: -46.4993994,
       });
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(MaxCheckInsError);
   });
 
   it('should be able to check in twice but in differente days', async () => {
