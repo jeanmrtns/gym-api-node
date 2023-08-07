@@ -21,6 +21,7 @@ describe('CheckIn service', () => {
       id: 'gym-id',
       name: 'Super gym',
       description: '',
+      phone: '',
       latitude: new Decimal(-21.8106509),
       longitude: new Decimal(-46.4993994),
       created_at: new Date(),
