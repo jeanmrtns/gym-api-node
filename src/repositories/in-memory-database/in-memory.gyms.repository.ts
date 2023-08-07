@@ -15,6 +15,7 @@ export class InMemoryGymsRepository implements GymsRepository {
     const gym = {
       id: data.id ?? randomUUID(),
       name: data.name,
+      phone: data.phone ?? null,
       description: data.description ?? null,
       latitude: new Prisma.Decimal(data.latitude.toString()),
       longitude: new Prisma.Decimal(data.longitude.toString()),

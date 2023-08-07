@@ -15,6 +15,7 @@ describe('Register user service', () => {
     const { gym } = await sut.execute({
       name: 'JS Gym',
       description: null,
+      phone: '1111111111',
       latitude: -21.8106509,
       longitude: -46.4993994,
     });

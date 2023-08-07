@@ -3,6 +3,7 @@ import { GymsRepository } from '@/repositories/gyms-repository';
 interface CreateGymServiceRequest {
   name: string;
   description: string | null;
+  phone: string | null;
   latitude: number;
   longitude: number;
 }
@@ -13,12 +14,14 @@ export class CreateGymService {
   async execute({
     name,
     description,
+    phone,
     latitude,
     longitude,
   }: CreateGymServiceRequest) {
     const gym = await this.gymsRepository.create({
       name,
       description,
+      phone,
       latitude,
       longitude,
     });
