@@ -24,8 +24,14 @@ describe('Fetch User Check-ins History service', () => {
 
     const { checkIns } = await sut.execute({
       userId: 'user-id',
+      page: 1,
     });
 
     expect(checkIns).toHaveLength(2);
+
+    expect(checkIns).toEqual([
+      expect.objectContaining({ gym_id: 'gym-id' }),
+      expect.objectContaining({ gym_id: 'gym-id2' }),
+    ]);
   });
 });
