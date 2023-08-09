@@ -5,4 +5,6 @@ export interface CheckInsRepository {
   getMetricsByUserId(userId: string): Promise<number>;
   findByUserIdOnDate(userId: string, date: Date): Promise<CheckIn | null>;
   findAllByUserId(userId: string, page: number): Promise<CheckIn[]>;
+  findById(id: string): Promise<CheckIn | null>;
+  save(checkIn: CheckIn): Promise<CheckIn>;
 }

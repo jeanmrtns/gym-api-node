@@ -6,8 +6,26 @@ import dayjs from 'dayjs';
 export class InMemoryCheckInsRepository implements CheckInsRepository {
   checkIns: CheckIn[] = [];
 
+  async save(checkIn: CheckIn) {
+    const checkInIndex = this.checkIns.findIndex(
+      (item) => item.id === checkIn.id,
+    );
+
+    if (checkInIndex >= 0) {
+      this.checkIns[checkInIndex] = checkIn;
+    }
+
+    return checkIn;
+  }
+
   async getMetricsByUserId(userId: string) {
     return this.checkIns.filter((checkIn) => checkIn.user_id === userId).length;
+  }
+
+  async findById(id: string) {
+    const checkIn = this.checkIns.find((checkIn) => checkIn.id === id);
+
+    return checkIn || null;
   }
 
   async findByUserIdOnDate(userId: string, date: Date) {
