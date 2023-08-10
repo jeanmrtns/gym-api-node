@@ -1,3 +1,5 @@
+[![Node.js CI](https://github.com/jeanmrtns/gym-api-node/actions/workflows/node.js.yml/badge.svg)](https://github.com/jeanmrtns/gym-api-node/actions/workflows/node.js.yml)
+
 # Setup
 
 - Create database with docker:
