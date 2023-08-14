@@ -27,3 +27,13 @@
   # or
   yarn dev
   ```
+
+### Testing with Vitest
+For E2E tests, first enter the prisma environment folder and link it to the project
+```bash
+  cd prisma/vitest-environment-prisma
+  npm link
+
+  cd ../../
+  npm link vitest-environment-prisma
+```
