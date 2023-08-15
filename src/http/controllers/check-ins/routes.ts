@@ -5,7 +5,7 @@ import { fetchUserCheckInsHistoryController } from './history.controller';
 import { getUserCheckInsMetricsController } from './metrics.controller';
 import { validateCheckInController } from './validate.controller';
 
-export async function gymsRoutes(app: FastifyInstance) {
+export async function checkInsRoutes(app: FastifyInstance) {
   app.addHook('onRequest', verifyJwtMiddleware);
 
   app.post('/check-ins/:gymId', createCheckInController);
