@@ -1,4 +1,5 @@
 import { app } from '@/app';
+import { createAndAuthenticateUser } from '@/utils/tests/create-and-authenticate-user';
 import request from 'supertest';
 import { afterAll, beforeAll, describe, it, expect } from 'vitest';
 
@@ -12,18 +13,8 @@ describe('Create gym controller', () => {
   });
 
   it('should be able to create a new gym', async () => {
-    await request(app.server).post('/users').send({
-      name: 'John Doe',
-      email: 'john@doe.com',
-      password: '123456',
-    });
+    const { token } = await createAndAuthenticateUser(app);
 
-    const authResponse = await request(app.server).post('/sessions').send({
-      email: 'john@doe.com',
-      password: '123456',
-    });
-
-    const { token } = authResponse.body;
     const response = await request(app.server)
       .post('/gyms')
       .set('Authorization', `Bearer ${token}`)
